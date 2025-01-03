@@ -12,7 +12,7 @@
 </script>
 
 <div
-	transition:fade|local
+	transition:fade
 	class="flex items-center justify-between p-3 {childData?.type === 'nice'
 		? 'bg-green-50'
 		: 'bg-red-50'} rounded-md"
