@@ -19,7 +19,7 @@
 <div class="container">
 	<div class="mx-auto max-w-7xl">
 		<h1 class="mb-5 text-center text-3xl font-bold text-gray-800">Santa's List Manager</h1>
-		<ChildAddForm {children} />
+		<ChildAddForm bind:childrenData={children} />
 		<div class="grid gap-5 sm:grid-cols-2">
 			<div class="rounded-lg bg-white p-6 shadow-md">
 				<h2 class="mb-4 flex items-center text-2xl font-semibold text-green-600">
@@ -34,7 +34,7 @@
 					Nice
 				</h2>
 				<div class="flex flex-col gap-3">
-					{#each niceChildren as child, i (i)}
+					{#each niceChildren as child (child?.name)}
 						<Child
 							childData={{
 								name: child?.name,
@@ -58,7 +58,7 @@
 					Noughty
 				</h2>
 				<div class="flex flex-col gap-3">
-					{#each naughtyChildren as child, i (i)}
+					{#each naughtyChildren as child (child?.name)}
 						<Child
 							childData={{
 								name: child?.name,

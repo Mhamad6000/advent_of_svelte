@@ -1,16 +1,25 @@
 <script lang="ts">
 	let {
-		children
+		childrenData = $bindable()
 	}: {
-		children: { name: string; tally: number }[];
+		childrenData: { name: string; tally: number }[];
 	} = $props();
+	let formMessage = $state('');
 	function handleSubmit(event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }) {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		children.unshift({
-			name: data.get('name') as string,
-			tally: parseInt(data.get('tally') as string)
-		});
+		if (!data.get('name') || !data.get('tally')) return;
+		if (childrenData?.find((child) => child.name === data.get('name'))) {
+			formMessage = 'Child already exists';
+			return;
+		} else {
+			formMessage = '';
+			childrenData.unshift({
+				name: data.get('name') as string,
+				tally: parseInt(data.get('tally') as string)
+			});
+			event.currentTarget.reset();
+		}
 	}
 </script>
 
@@ -46,5 +55,10 @@
 				Add Child
 			</button>
 		</div>
+		{#if formMessage}
+			<div class="flex w-full items-center">
+				<span class="text-sm text-red-500">{formMessage}</span>
+			</div>
+		{/if}
 	</div>
 </form>
